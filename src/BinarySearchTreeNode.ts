@@ -119,6 +119,10 @@ export class BinarySearchTreeNode {
     return this.right;
   }
 
+  public getParent(): BinarySearchTreeNode {
+    return this.parent;
+  }
+
   public hasLeft(): boolean {
     return this.left instanceof BinarySearchTreeNode;
   }

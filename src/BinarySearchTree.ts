@@ -13,6 +13,10 @@ export class BinarySearchTree {
    */
   private root: BinarySearchTreeNode | null = null;
 
+  private setRoot(node: BinarySearchTreeNode | null) {
+    this.root = node; 
+  }
+
   contrustor() {}
 
   /**
@@ -96,7 +100,7 @@ export class BinarySearchTree {
       } else {
         if (value > currentNode.getValue()) {
           if (currentNode.hasRight()) {
-            currentNode = currentNode.getLeft();
+            currentNode = currentNode.getRight();
           } else {
             return null;
           }
@@ -105,8 +109,138 @@ export class BinarySearchTree {
     }
   }
 
-  public hasValue(value) {
+  /**
+   * Checks if value exists in the tree
+   *
+   */
+  public hasValue(value): boolean {
     return this.find(value) !== null;
+  }
+
+  /**
+   * Finds node with the maximum 
+   *   value (the rightmost).
+   *
+   */
+  public max(currentNode = this.root) {
+    if (currentNode === null) { return null; }
+
+    if (currentNode.hasRight()) { return this.max(currentNode.getRight()); }
+
+    return currentNode;
+  } 
+
+  /**
+   * Finds node with the minimum
+   *   value (the leftmost.
+   *
+   */
+  public min(currentNode: BinarySearchTreeNode | null = this.root): BinarySearchTreeNode | null {
+    if (currentNode === null) { return null; }
+
+    if (currentNode.hasLeft()) { return this.min(currentNode.getLeft()); }
+
+    return currentNode;
+  }
+
+  /**
+   * Removes node from the tree.
+   *
+   */
+  public remove(value) {
+    const nodeToRemove = this.find(value);
+
+    if (nodeToRemove === null) {
+      return null;
+    }
+
+    /**
+     * First case. Node does not have children.
+     *
+     */
+    if (!nodeToRemove.hasLeft() && !nodeToRemove.hasRight()) {
+      const parentNode = nodeToRemove.getParent();
+
+      if (nodeToRemove.isRoot()) {
+        this.clear();
+      } else {
+        if (parentNode.getValue() > value) {
+          parentNode.setLeft(null);
+        } else {
+          parentNode.setRight(null);
+        }
+      }
+
+      this.count--;
+
+      return true;
+    }
+
+    /**
+     * Second case. Node has left child and does not have 
+     *   right child.
+     *
+     */
+    if (!nodeToRemove.hasRight()) {
+      const parentNode = nodeToRemove.getParent();
+
+      if (nodeToRemove.isRoot()) {
+        this.setRoot(nodeToRemove.getLeft());
+      } else {
+        if (parentNode.getValue() > value) {
+          parentNode.setLeft(nodeToRemove.getLeft());
+        } else {
+          parentNode.setRight(nodeToRemove.getLeft());
+        }
+      }   
+     
+      this.count--;
+
+      return true;
+    }
+
+    /**
+     * Third case. Node has right child and does not have 
+     *   left child.
+     *
+     */
+    if (!nodeToRemove.hasLeft()) {
+      const parentNode = nodeToRemove.getParent();
+
+      if (nodeToRemove.isRoot()) {
+        this.setRoot(nodeToRemove.getRight());
+      } else {
+        if (parentNode.getValue() > value) {
+          parentNode.setLeft(nodeToRemove.getRight());
+        } else {
+          parentNode.setRight(nodeToRemove.getRight());
+        }
+      }   
+     
+      this.count--;
+
+      return true;
+    }
+
+    /**
+     * Fourth case. Node has both children - left and right.
+     *
+     */
+    const parentNode = nodeToRemove.getParent();
+
+    if (nodeToRemove.isRoot()) {
+      this.setRoot(nodeToRemove.getRight());
+    } else {
+      if (parentNode.getValue() > value) {
+        parentNode.setLeft(nodeToRemove.getRight());
+      } else {
+        parentNode.setRight(nodeToRemove.getRight());
+      }
+    }   
+    
+    this.count--;
+
+    return true;
   }
 
   /**
@@ -116,5 +250,9 @@ export class BinarySearchTree {
   public clear() {
     this.count = 0;
     this.root = null;
+  }
+
+  public getRoot(): BinarySearchTreeNode | null {
+    return this.root;
   }
 }
