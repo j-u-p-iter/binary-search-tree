@@ -113,6 +113,18 @@
     which "^1.3.1"
     yargs-parser "^10.1.0"
 
+"@j.u.p.iter/queue@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@j.u.p.iter/queue/-/queue-1.0.0.tgz#c66df9c9ace23b041dbe0b201b818c03ced97908"
+  integrity sha512-wWI5HI1QiTBcno32If3cxveKGftRa8CBZUPu5P1m14VWYGRDIptVM1+uljkGKT97LIrqrvkfyqAdet0jgtc1Sg==
+  dependencies:
+    "@j.u.p.iter/singly-linked-list" "^0.0.0-semantically-released"
+
+"@j.u.p.iter/singly-linked-list@^0.0.0-semantically-released":
+  version "0.0.0-semantically-released"
+  resolved "https://registry.npmjs.org/@j.u.p.iter/singly-linked-list/-/singly-linked-list-0.0.0-semantically-released.tgz#c32550bf339d8dbb10410453ab31ff4f282e4a42"
+  integrity sha512-VcKHfVrtI5JZU+GSgMW0HmBWuSGVtRC/Cx1eYVHmIcv5HL544wq3F0iYMSAgiDj0f4m+AXkgvVzWKCAr68Okpw==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
   resolved "https://registry.npmjs.org/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.1.tgz#a21117b19ee9be70c379ec1877537ef2e1c63301"

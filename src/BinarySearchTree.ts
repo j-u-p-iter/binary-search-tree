@@ -1,14 +1,16 @@
+import { Queue } from '@j.u.p.iter/queue';
+
 import { BinarySearchTreeNode } from "./BinarySearchTreeNode";
 
 export class BinarySearchTree {
   /**
-   * Holds the number of nodes in the tree.
+   * Holds the number of the nodes in the tree.
    *
    */
   private count: number = 0;
 
   /**
-   * Holds the root node of a tree.
+   * Holds the root node of the tree.
    *
    */
   private root: BinarySearchTreeNode | null = null;
@@ -44,10 +46,11 @@ export class BinarySearchTree {
           /**
            * Continue traversing to the left.
            *
-           */ currentNode = currentNode.getLeft();
+           */ 
+          currentNode = currentNode.getLeft();
         } else {
           /**
-           * Sets up as left node to the current one
+           * Sets up as left node for the current one
            *   and stops traversing.
            *
            */
@@ -61,7 +64,8 @@ export class BinarySearchTree {
             /**
              * Continue traversing to the right.
              *
-             */ currentNode = currentNode.getRight();
+             */ 
+            currentNode = currentNode.getRight();
           } else {
             /**
              * Sets up as right node to the current one
@@ -110,7 +114,8 @@ export class BinarySearchTree {
   }
 
   /**
-   * Checks if value exists in the tree
+   * Checks if value exists 
+   *   in the tree
    *
    */
   public hasValue(value): boolean {
@@ -122,7 +127,7 @@ export class BinarySearchTree {
    *   value (the rightmost).
    *
    */
-  public max(currentNode = this.root) {
+  public max(currentNode: BinarySearchTreeNode | null = this.root): BinarySearchTreeNode | null {
     if (currentNode === null) { return null; }
 
     if (currentNode.hasRight()) { return this.max(currentNode.getRight()); }
@@ -215,7 +220,7 @@ export class BinarySearchTree {
         } else {
           parentNode.setRight(nodeToRemove.getRight());
         }
-      }   
+      }
      
       this.count--;
 
@@ -226,19 +231,11 @@ export class BinarySearchTree {
      * Fourth case. Node has both children - left and right.
      *
      */
-    const parentNode = nodeToRemove.getParent();
+    const minNode = this.min(nodeToRemove.getRight());  
 
-    if (nodeToRemove.isRoot()) {
-      this.setRoot(nodeToRemove.getRight());
-    } else {
-      if (parentNode.getValue() > value) {
-        parentNode.setLeft(nodeToRemove.getRight());
-      } else {
-        parentNode.setRight(nodeToRemove.getRight());
-      }
-    }   
-    
-    this.count--;
+    this.remove(minNode.getValue());
+
+    nodeToRemove.setValue(minNode.getValue());
 
     return true;
   }
@@ -254,5 +251,53 @@ export class BinarySearchTree {
 
   public getRoot(): BinarySearchTreeNode | null {
     return this.root;
+  }
+
+  /**
+   * Traverses the tree in a 
+   *   breadth-first fashion.
+   *
+   */
+  public traverseBreadthFirst() {
+    const queue = new Queue();  
+
+    const visitedNodes = [];
+
+    queue.enqueue(this.root);
+
+    while(!queue.isEmpty()) {
+      const nodeFromQueue = queue.dequeue().getValue();
+
+      if (nodeFromQueue.hasLeft()) {
+        queue.enqueue(
+          nodeFromQueue.getLeft()
+        );
+      }
+
+      if (nodeFromQueue.hasRight()) {
+        queue.enqueue(
+          nodeFromQueue.getRight()
+        );
+      }
+
+      visitedNodes.push(nodeFromQueue);
+    }
+
+    return visitedNodes;
+  }
+
+  /**
+   * Prints the tree in a 
+   *   breadth-first fashion.
+   *
+   */
+  public printBreadthFirst() {
+    const visitedNodes = this.traverseBreadthFirst();
+
+    const visitedNodesValues = visitedNodes.map((visitedNode) => {
+      return visitedNode.getValue();
+    }); 
+
+    return visitedNodesValues;
   }
 }

@@ -107,7 +107,7 @@ export class BinarySearchTreeNode {
    * Returns the left child node.
    *
    */
-  public getLeft(): BinarySearchTreeNode {
+  public getLeft(): BinarySearchTreeNode | null {
     return this.left;
   }
 
@@ -115,11 +115,11 @@ export class BinarySearchTreeNode {
    * Returns the right child node.
    *
    */
-  public getRight(): BinarySearchTreeNode {
+  public getRight(): BinarySearchTreeNode | null {
     return this.right;
   }
 
-  public getParent(): BinarySearchTreeNode {
+  public getParent(): BinarySearchTreeNode | null {
     return this.parent;
   }
 

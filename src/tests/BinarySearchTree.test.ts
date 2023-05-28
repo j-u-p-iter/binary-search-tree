@@ -19,11 +19,13 @@ describe('BinarySearchTree', () => {
   beforeAll(() => {
     /**
      * Creates following BST:
-     *        50
-     *      /    \
-     *    30      70
-     *   /  \    /  \
-     *  20   40  60   80 
+     *          50
+     *        /    \
+     *      30      70
+     *     /  \    /  \
+     *    20   40  60   80 
+     *        /      \
+     *      32        65
      */
     createBST = () => {
       const tree = new BinarySearchTree();
@@ -41,6 +43,9 @@ describe('BinarySearchTree', () => {
 
       tree.insert(60)
       tree.insert(80)
+
+      tree.insert(32)
+      tree.insert(65)
 
       return tree;
     }
@@ -88,6 +93,72 @@ describe('BinarySearchTree', () => {
 
         expect(tree.min(new BinarySearchTreeNode(40)).getValue()).toBe(40);
       });
+    });
+  });
+
+  describe('traverseBreadthFirst method', () => {
+    it('traverses nodes properly', () => {
+      const tree = createBST();
+
+      const traversedNodes = tree.traverseBreadthFirst();
+
+      const traversedNodesValues = traversedNodes.map((traversedNode) => {
+        return traversedNode.getValue(); 
+      });
+
+      expect(traversedNodesValues).toEqual([50, 30, 70, 20, 40, 60, 80, 32, 65]);
+    });
+  });
+
+  describe('printBreadthFirst method', () => {
+    it('returns traversed in a breadth first fashion nodes values', () => {
+      const tree = createBST();
+
+      const traversedNodesValues = tree.printBreadthFirst();
+
+      expect(traversedNodesValues).toEqual([50, 30, 70, 20, 40, 60, 80, 32, 65]);
+    });
+  });
+
+  describe('remove method', () => {
+    it('removed node does not have children', () => {
+      const tree = createBST();
+
+      tree.remove(20);
+
+      const traversedNodesValues = tree.printBreadthFirst();
+
+      expect(traversedNodesValues).toEqual([50, 30, 70, 40, 60, 80, 32, 65]);
+    });
+
+    it('removed node has left child and does not have right child', () => {
+      const tree = createBST();
+
+      tree.remove(40);
+
+      const traversedNodesValues = tree.printBreadthFirst();
+
+      expect(traversedNodesValues).toEqual([50, 30, 70, 20, 32, 60, 80, 65]);
+    });
+
+    it('removed node has right child and does not have left child', () => {
+      const tree = createBST();
+
+      tree.remove(60);
+
+      const traversedNodesValues = tree.printBreadthFirst();
+
+      expect(traversedNodesValues).toEqual([50, 30, 70, 20, 40, 65, 80, 32]);
+    });
+
+    it('removed node has both children', () => {
+      const tree = createBST();
+
+      tree.remove(30);
+
+      const traversedNodesValues = tree.printBreadthFirst();
+
+      expect(traversedNodesValues).toEqual([50, 32, 70, 20, 40, 60, 80, 65]);
     });
   });
 });

@@ -20,5 +20,8 @@
   },
   "devDependencies": {
     "@j.u.p.iter/jupiter-scripts": "^1.14.1"
+  },
+  "dependencies": {
+    "@j.u.p.iter/queue": "^1.0.0"
   }
 }
