@@ -100,10 +100,10 @@ describe('BinarySearchTree', () => {
     it('traverses nodes properly', () => {
       const tree = createBST();
 
-      const traversedNodes = tree.traverseBreadthFirst();
+      const traversedNodesValues = []; 
 
-      const traversedNodesValues = traversedNodes.map((traversedNode) => {
-        return traversedNode.getValue(); 
+      tree.traverseBreadthFirst((node) => {
+        return traversedNodesValues.push(node.getValue());
       });
 
       expect(traversedNodesValues).toEqual([50, 30, 70, 20, 40, 60, 80, 32, 65]);

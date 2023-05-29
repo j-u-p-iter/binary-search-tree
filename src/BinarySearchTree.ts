@@ -258,10 +258,8 @@ export class BinarySearchTree {
    *   breadth-first fashion.
    *
    */
-  public traverseBreadthFirst() {
+  public traverseBreadthFirst(callback: (node: BinarySearchTreeNode) => void) {
     const queue = new Queue();  
-
-    const visitedNodes = [];
 
     queue.enqueue(this.root);
 
@@ -280,10 +278,8 @@ export class BinarySearchTree {
         );
       }
 
-      visitedNodes.push(nodeFromQueue);
+      callback(nodeFromQueue);
     }
-
-    return visitedNodes;
   }
 
   /**
@@ -292,11 +288,11 @@ export class BinarySearchTree {
    *
    */
   public printBreadthFirst() {
-    const visitedNodes = this.traverseBreadthFirst();
+    const visitedNodesValues = [] 
 
-    const visitedNodesValues = visitedNodes.map((visitedNode) => {
-      return visitedNode.getValue();
-    }); 
+    this.traverseBreadthFirst((node) => {
+      visitedNodesValues.push(node.getValue()); 
+    });
 
     return visitedNodesValues;
   }
